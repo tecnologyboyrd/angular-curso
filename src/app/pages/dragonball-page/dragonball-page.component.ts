@@ -14,11 +14,33 @@ interface Character{
   styleUrl: './dragonball-page.component.css'
 })
 export class DragonballPageComponent {
-ImprimirEnConsola() {
-  console.log('Name: ', this.name(), 'Power: ', this.power());
-}
   name = signal('Goham');
   power= signal(100);
+
+
+addCharacter() {
+  // console.log('Name: ', this.name(), 'Power: ', this.power());
+  if(!this.name() || !this.power() || this.power() <=0){
+    return;
+  }
+
+  const newCharacter:Character={
+    id: this.character.length +1,
+    name: this.name(),
+    power: this.power(),
+  }
+
+  this.character.update((list)=> [...list, newCharacter]);
+  this.resetFields();
+
+}
+
+resetFields(){
+  this.name.set('');
+  this.power.set(0);
+}
+
+
 
 
   character = signal<Character[]>([
